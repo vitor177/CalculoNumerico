@@ -1,7 +1,6 @@
 import math
 
-def f(x): # Função do Exercício
-  return math.pow(x,3)-1.7*math.pow(x,2)- 12.78*x -10.08 
+f = lambda x: math.pow(x,3)-1.7*math.pow(x,2)- 12.78*x -10.08 # funcao f
 
 a,b = 2,1000000 # Intervalo [a,b]
 epsilon = 0.01 # [Condição de parada]
