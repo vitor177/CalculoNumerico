@@ -2,7 +2,7 @@ import math
 
 matriz = []
 
-with open(f'm1.txt', 'r') as f:
+with open(f'm3.txt', 'r') as f:
     n = int(f.readline())
     matriz = [[float(num) for num in line.split(' ')] for line in f]
 b = []
@@ -60,21 +60,25 @@ def gaussPivoteamento(A,b):
   print(vetorSolucao)
   return vetorSolucao
 
+
 def obterNorma(b, A, vetorSolucao):
     value = 0
-    result = []
+    Ax = []
     for i in range(len(vetorSolucao)):
-      value = 0
-      for j in range(len(vetorSolucao)):
-        value += vetorSolucao[j] * A[i][j]
-      result.append(value)
+        value = 0
+        for j in range(len(vetorSolucao)):
+            value += vetorSolucao[j] * A[i][j]
+        Ax.append(value)
 
-    for i, value in enumerate(b):
-      result[i] = value - result[i]
-    for elem in result:
-      value += pow(abs(elem), 2)
-    return pow(value, 0.5)
+    res = []
+    for i in range(len(vetorSolucao)):
+        aux = b[i] - Ax[i]
+        res.append(aux)
 
+    norma = 0
+    for i in range(len(vetorSolucao)):
+        norma += pow(res[i], 2)
+    return pow(norma, 0.5)
 
 
 gaussPivoteamento(A,b)
