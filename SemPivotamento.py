@@ -1,5 +1,6 @@
 import math
 
+
 matriz = []
 
 with open(f'm3.txt', 'r') as f:
@@ -21,6 +22,21 @@ def gaussPivoteamento(A,b):
     # verificar qual o maior pivô
     pivo = math.fabs(A[i][i])
     linhaPivo = i
+
+    for j in range(i+1, len(A)):
+      if math.fabs(A[j][i] > pivo):
+        pivo = math.fabs(A[j][i])
+        linhaPivo = j
+
+    # permutar as linhas
+    if linhaPivo != i:
+      linhaAuxiliar = A[i]
+      A[i] = A[linhaPivo]
+      A[linhaPivo] = linhaAuxiliar
+
+      bAuxiliar = b[i]
+      b[i] = b[linhaPivo]
+      b[linhaPivo] = bAuxiliar
 
       # eliminação gaussiana
     for m in range(i+1, len(A)):
@@ -45,21 +61,26 @@ def gaussPivoteamento(A,b):
   print(vetorSolucao)
   return vetorSolucao
 
-def obterNorma(b, A, vetorSolucao):
-    value = 0
-    result = []
-    for i in range(len(vetorSolucao)):
-      value = 0
-      for j in range(len(vetorSolucao)):
-        value += vetorSolucao[j] * A[i][j]
-      result.append(value)
 
-    for i, value in enumerate(b):
-      result[i] = value - result[i]
-    for elem in result:
-      value += pow(abs(elem), 2)
-    print(pow(value, 0.5))
-    return pow(value, 0.5)
+def obterNorma(b, A, vetorSolucao):
+  value = 0
+  Ax = []
+  for i in range(len(vetorSolucao)):
+    value = 0
+    for j in range(len(vetorSolucao)):
+      value += vetorSolucao[j] * A[i][j]
+    Ax.append(value)
+
+  res = []
+  for i in range(len(vetorSolucao)):
+    aux = b[i] - Ax[i]
+    res.append(aux)
+
+  norma = 0
+  for i in range(len(vetorSolucao)):
+    norma += pow(res[i], 2)
+  print(pow(norma, 0.5))
+  return pow(norma, 0.5)
 
 
 
